@@ -1,47 +1,19 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Filter from '../Filter/Filter';
 import s from './Searchbar.module.css';
 
 
-export default function Searchbar ({onSubmit}){
-    const [query, setQuery] = useState('');
-
-    const handleChange = (e) => {
-        setQuery(e.target.value.toLowerCase())
-    }
-
-    const handleSubmit = (e) => {
-        e.preventdefault();
-        if(query.trim()===''){
-            return toast.error('Enter country')
-        }
-        onSubmit(query);
-        setQuery('');
-
-    }
+export default function Searchbar ({value, onChange}){
+    console.log(value);
+    
     return(
         <div>
             <img className={s.Logo} src="" alt="Логотип"/>
             <h1 className={s.Title}>STATISTIC</h1>
-            <form onSubmit={handleSubmit} className={s.SearchForm}>
-                <input 
-                onChange={handleChange}
-                className={s.SearchForm__input}
-                value={query}
-                name="query"
-                type="text"
-                autoComplete="off"
-                autoFocus
-                placeholder="Search..."
-                />
-            </form>
+            <Filter filter={value} onChange={onChange}/>
 
         </div>
     )
 }
 
-Searchbar.prototype = {
-    onSubmit: PropTypes.func.isRequired
-}
+

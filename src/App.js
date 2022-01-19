@@ -1,59 +1,63 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import Loader from "react-loader-spinner";
+import FetchApi from './apiService';
 import { ToastContainer } from "react-toastify";
-import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
 import Searchbar from './components/Searchbar';
-import CountryList from './components/CountryList';
-import Modal from './components/Modal';
+// import Modal from './components/Modal';
 import './App.css';
-
-
-const MY_KEY = 'PMAK-61e5cf2d12a2c33c817f13b7-29974da44c163c85c45abda8679a5d9d20'
-axios.defaults.baseURL = 'https://api.covid19api.com/';
-const oneCountry = 'live/country/south-africa/status/confirmed'
+import CountryTable from "./components/CountryTable/CountryTable";
 
 function App() {
-  const [countries, setCountries] = useState([])
-  const [query, setQuery] = useState('')
+  const [countries, setCountries] = useState([]);
   const [status, setStatus] = useState("idle");
-
-console.log(countries);
+  const [filter, setFilter] = useState('');
 
   useEffect(()=>{
-    if (!query) {
-      return;
-    }
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
+      // window.scrollTo({
+      //     top: document.documentElement.scrollHeight,
+      //     behavior: "smooth",
+      //   });
+    
+        setStatus("pending")
+    
+       FetchApi()
+        .then(data=>{
+          setCountries(data.Countries)
+          setStatus("resolved")
+        })
+        .catch((error) => alert('Error'))
+        .finally(()=>setStatus("resolved"))
 
-    setStatus("pending")
+  },[])
 
-
-    axios.get("summary")
-    .then(response=>response.data)
-    // .then(data=> {
-    //   setCountries(data.countries)
-    //   setStatus("resolved")
-    // })
-    .catch((error) => alert('Error'))
-    .finally(()=>setStatus("resolved"))
-  })
-
-  const searchQuery = (query) => {
-    setQuery(query);
+  const changeFilter = (e) => {
+    console.log(e);
+    setFilter(e)
   }
+
+  const getFilterSearch = () => {
+    const normalizedFilter = filter.toLowerCase();
+
+    return countries.filter((country) =>
+      country.Country.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
+
   return (
    <>
-   <Searchbar onSubmit={searchQuery}/>
-   <ToastContainer autoClose={3000} />
-   {status === "resolved" && (
-     <CountryList countries={countries}/>
-   )}
-   {status === "pending" && (
+      <Searchbar 
+          value={filter} 
+          onChange={changeFilter}
+      />
+      <ToastContainer autoClose={3000} />
+      {status === "resolved" &&
+      <CountryTable 
+          countries={getFilterSearch()}
+      />
+      }
+       {/* {status === "pending" && (
         <Loader
           className='Loader'
           type='Puff'
@@ -63,7 +67,9 @@ console.log(countries);
           timeout={3000}
           style={{ margin: "0 50%" }}
         />
-      )}
+      )} */}
+   
+   
    {/* <Modal/> */}
      </>
   );
