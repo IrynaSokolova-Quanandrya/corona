@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import s from './Filter.module.css'
-import SearchIcon from '../../images/Search-icon.svg';
+import search from '../../images/search.png';
 
 export default function Filter({filter, onChange}){
     
@@ -20,9 +20,7 @@ export default function Filter({filter, onChange}){
                 autoComplete="off"
                 placeholder="Search..."
             />
-        <svg className={s.Icon} width='30' height='30'>
-            <use href={SearchIcon}></use>
-        </svg>
+        {/* <img className={s.Icon} src={search} alt='Magnifying glass'/> */}
         </div>
     )
 }

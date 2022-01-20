@@ -1,27 +1,22 @@
 import PropTypes from 'prop-types'
 import { createPortal } from 'react-dom';
 import { useEffect, useState } from 'react/cjs/react.development';
-import FetchApi from '../../apiService'
+import confirmed from '../../images/confirmed.png';
+import death from '../../images/death.png';
+import recovered from '../../images/recovered.png';
 import s from './Modal.module.css';
-
+console.log(confirmed);
 const modalRoot = document.querySelector('#modal-root');
 
 export default function Modal({onClose, onGetData}){
-//     const [country, setCountry] = useState([])
 
-// console.log(country);
-//     useEffect(()=>{
-//         FetchApi.FetchOneCountryStatictics('Ukraine')
-//         .then(setCountry)
-//     },[])
-
-    useEffect(()=>{
+    // useEffect(()=>{
         // window.addEventListener('click', onCloseByClick);
-        window.addEventListener('keydown', onCloseByKeydown);
-        return (
-            window.removeEventListener('keydown', onCloseByKeydown)
-        )
-    },[])
+    //     window.addEventListener('keydown', onCloseByKeydown);
+    //     return (
+    //         window.removeEventListener('keydown', onCloseByKeydown)
+    //     )
+    // },[])
 
     // const onCloseByClick = (e) => {
     //     if(e.target.nodeName === 'DIV'){
@@ -29,36 +24,49 @@ export default function Modal({onClose, onGetData}){
     //     }
     // }
 
-    const onCloseByKeydown = (e) => {
-        console.log(e.code);
-        if(e.code === 'Escape'){
-            onClose();
-        }
-    }
+    // const onCloseByKeydown = (e) => {
+    //     console.log(e.code);
+    //     if(e.code === 'Escape'){
+    //         onClose();
+    //     }
+    // }
 
     return createPortal (
-        <div 
-            className={s.Modal} 
-            onClose={onClose}>
-        <h2>{onGetData.country}</h2>
-        <ul>
-            <li>
-                {/* <svg></svg> */}
-                <p>Total Confirmed</p>
+        <div className={s.overlay}>
+            <div 
+            className={s.modal} 
+            >
+        <h2 className={s.modal__title}>{onGetData.country}</h2>
+        <ul className={s.modal__list}>
+            <li className={s.modal__item}>                
+                <p>
+                    <img src={confirmed} alt='Icon'/>
+                    Total Confirmed
+                    </p>
                 <p>{onGetData.confirmed}</p>
             </li>
-            <li>
-                {/* <svg></svg> */}
-                <p>Total Deaths</p>
+            <li className={s.modal__item}>                
+                <p>
+                    <img src={death} alt='Icon'/>
+                    Total Deaths
+                    </p>
                 <p>{onGetData.deaths}</p>
             </li>
-            <li>
-                {/* <svg></svg> */}
-                <p>Total Recovered</p>
+            <li className={s.modal__item}>                
+                <p>
+                    <img src={recovered} alt='Icon'/>
+                    Total Recovered
+                    </p>
                 <p>{onGetData.recovered}</p>
             </li>
         </ul>
-        <button type="button"></button>
+        <button
+        onClick={onClose}
+        type="button"
+        className={s.btn}>
+            OK
+            </button>
+        </div>
         </div>,
         modalRoot,
     )

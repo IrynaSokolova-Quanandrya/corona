@@ -3,9 +3,7 @@ import CountryRow from '../CountryRow';
 
 
 export default function CountryTable({countries, onClick, onGetData}){
-console.log(countries);
-console.log(onClick);
-console.log(onGetData);
+
     return (
         <>
     <table className={s.Table}>
