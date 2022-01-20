@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types';
 import s from './CountryRow.module.css'
 
-export default function CountryRow({ country, totalConfirmed, number}){
+export default function CountryRow({
+    onOpen, 
+    country, 
+    confirmed, 
+    number, 
+    onGetData,  
+    deaths, 
+    recovered}){
+    
     return(
-        <tr>
+        <tr
+        onClick={()=>onGetData(country, confirmed, deaths, recovered)}
+        // onOpen={onOpen}
+        className={s.Row}>
             <td key={number}>{number}</td>
             <td key={country}>{country}</td>
-            <td key={totalConfirmed}>{totalConfirmed}</td>
+            <td key={confirmed}>{confirmed}</td>
         </tr>
     )
 }

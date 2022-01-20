@@ -1,0 +1,13 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Header__title {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  font-size: 72px;
+  font-weight: bold;
+  line-height: 84px;
+}

@@ -4,7 +4,8 @@ import FetchApi from './apiService';
 import { ToastContainer } from "react-toastify";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Searchbar from './components/Searchbar';
-// import Modal from './components/Modal';
+import Modal from './components/Modal';
+import Container from './components/Container/Container';
 import './App.css';
 import CountryTable from "./components/CountryTable/CountryTable";
 
@@ -12,16 +13,14 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [status, setStatus] = useState("idle");
   const [filter, setFilter] = useState('');
-
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState('');
+  
   useEffect(()=>{
-      // window.scrollTo({
-      //     top: document.documentElement.scrollHeight,
-      //     behavior: "smooth",
-      //   });
     
         setStatus("pending")
     
-       FetchApi()
+       FetchApi.FetchAllStatistics()
         .then(data=>{
           setCountries(data.Countries)
           setStatus("resolved")
@@ -31,6 +30,22 @@ function App() {
 
   },[])
 
+  const getModalData = (country, confirmed, deaths, recovered) => {
+    setModalData({ 
+      country,
+      confirmed, 
+      deaths, 
+      recovered 
+    });
+    toggleModal()
+  };
+  
+  const toggleModal = () => {
+    setShowModal(prev => !prev)
+  };
+
+ 
+
   const changeFilter = (e) => {
     console.log(e);
     setFilter(e)
@@ -38,7 +53,6 @@ function App() {
 
   const getFilterSearch = () => {
     const normalizedFilter = filter.toLowerCase();
-
     return countries.filter((country) =>
       country.Country.toLowerCase().includes(normalizedFilter)
     );
@@ -46,15 +60,18 @@ function App() {
 
 
   return (
-   <>
+   <Container>
       <Searchbar 
           value={filter} 
           onChange={changeFilter}
+          
       />
       <ToastContainer autoClose={3000} />
       {status === "resolved" &&
       <CountryTable 
           countries={getFilterSearch()}
+          onGetData={getModalData}
+          onClick={toggleModal}
       />
       }
        {/* {status === "pending" && (
@@ -70,8 +87,10 @@ function App() {
       )} */}
    
    
-   {/* <Modal/> */}
-     </>
+   {showModal && 
+   <Modal onClose={toggleModal} onGetData={modalData}/>
+   }
+     </Container>
   );
 }
 

@@ -1,0 +1,14 @@
+li {
+  list-style: none;
+}
+
+.Modal {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  left: 660px;
+  top: 340px;
+
+  /* background: #ffffff; */
+  border-radius: 20px;
+}
