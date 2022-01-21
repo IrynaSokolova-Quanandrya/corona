@@ -8,10 +8,12 @@ export default function CountryRow({
     onGetData,  
     deaths, 
     recovered}){
-    
+    const getModalData = () => {
+        onGetData(country, confirmed, deaths, recovered)
+    }
     return(
         <tr
-        onClick={()=>onGetData(country, confirmed, deaths, recovered)}
+        onClick={getModalData}
         className={s.Row}>
             <td key={number}>{number}</td>
             <td key={country}>{country}</td>
