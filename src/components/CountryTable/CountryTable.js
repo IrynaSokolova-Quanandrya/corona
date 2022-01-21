@@ -1,9 +1,10 @@
 import s from './CountryTable.module.css';
+import PropTypes from 'prop-types';
 import CountryRow from '../CountryRow';
 
 
 export default function CountryTable({countries, onClick, onGetData}){
-
+    
     return (
         <>
     <table className={s.Table}>
@@ -33,4 +34,8 @@ export default function CountryTable({countries, onClick, onGetData}){
           </>
     )
 }
-
+ CountryTable.propTypes={
+    countries: PropTypes.array.isRequired, 
+    onClick: PropTypes.func.isRequired, 
+    onGetData: PropTypes.func.isRequired
+ }

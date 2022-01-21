@@ -1,35 +1,13 @@
 import PropTypes from 'prop-types'
 import { createPortal } from 'react-dom';
-import { useEffect, useState } from 'react/cjs/react.development';
 import confirmed from '../../images/confirmed.png';
 import death from '../../images/death.png';
 import recovered from '../../images/recovered.png';
 import s from './Modal.module.css';
-console.log(confirmed);
+
 const modalRoot = document.querySelector('#modal-root');
 
 export default function Modal({onClose, onGetData}){
-
-    // useEffect(()=>{
-        // window.addEventListener('click', onCloseByClick);
-    //     window.addEventListener('keydown', onCloseByKeydown);
-    //     return (
-    //         window.removeEventListener('keydown', onCloseByKeydown)
-    //     )
-    // },[])
-
-    // const onCloseByClick = (e) => {
-    //     if(e.target.nodeName === 'DIV'){
-    //         onClose()
-    //     }
-    // }
-
-    // const onCloseByKeydown = (e) => {
-    //     console.log(e.code);
-    //     if(e.code === 'Escape'){
-    //         onClose();
-    //     }
-    // }
 
     return createPortal (
         <div className={s.overlay}>
@@ -70,4 +48,9 @@ export default function Modal({onClose, onGetData}){
         </div>,
         modalRoot,
     )
+}
+
+Modal.propTypes={
+    onClose: PropTypes.func.isRequired,
+    onGetData: PropTypes.object.isRequired
 }

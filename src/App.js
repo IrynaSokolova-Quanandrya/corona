@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-// import Loader from "react-loader-spinner";
+import {ThreeDots} from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import FetchApi from './apiService';
 import { ToastContainer } from "react-toastify";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Searchbar from './components/Searchbar';
 import Modal from './components/Modal';
 import Container from './components/Container/Container';
@@ -47,7 +47,6 @@ function App() {
  
 
   const changeFilter = (e) => {
-    console.log(e);
     setFilter(e)
   }
 
@@ -74,17 +73,13 @@ function App() {
           onClick={toggleModal}
       />
       }
-       {/* {status === "pending" && (
-        <Loader
-          className='Loader'
-          type='Puff'
-          color='#00BFFF'
-          height={100}
-          width={100}
-          timeout={3000}
-          style={{ margin: "0 50%" }}
-        />
-      )} */}
+       {status === "pending" && (
+         <ThreeDots 
+         color="#00BFFF" 
+         height={150} 
+         width={150} 
+         style={{margin: "0, 50%"}}/>
+       )}
    
    
    {showModal && 

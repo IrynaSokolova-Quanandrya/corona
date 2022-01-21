@@ -13,11 +13,14 @@
   font-size: 48px;
   line-height: 56px;
 
-  background-image: url('../');
+  background-image: url('../../images/search.png');
+  background-repeat: no-repeat;
+  background-position: 96% 50%;
 }
 
 .Input:focus,
 .Input:hover {
+  outline: none;
   border: 5px solid #2196f3;
 }
 

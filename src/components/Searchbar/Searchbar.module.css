@@ -5,9 +5,10 @@
 }
 .Header__title {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
-  font-size: 72px;
+
+  font-family: Roboto, sans-serif;
+  font-size: 35px;
   font-weight: bold;
   line-height: 84px;
 }
